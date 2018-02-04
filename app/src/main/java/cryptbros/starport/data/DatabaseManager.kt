@@ -9,7 +9,7 @@ import cryptbros.starport.utils.SingletonHolder
 /**
  * Created by Bruno Capezzali on 2/3/18.
  */
-@Database(entities = arrayOf(Session::class), version = 1)
+@Database(entities = arrayOf(Session::class), version = 1, exportSchema = false)
 abstract class DatabaseManager : RoomDatabase() {
     abstract fun sessionDao(): SessionDao
 
