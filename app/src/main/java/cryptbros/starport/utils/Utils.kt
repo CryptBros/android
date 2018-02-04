@@ -10,6 +10,6 @@ object Utils {
         if (addressString == null) {
             return false
         }
-        return addressString.length == 56
+        return addressString.length == 64
     }
 }
