@@ -22,7 +22,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".BarcodeReaderActivity"></activity>
+        <activity
+            android:name=".BarcodeReaderActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package cryptbros.starport
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -8,6 +9,8 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.support.v7.app.AppCompatActivity
 import android.util.SparseArray
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
 import com.google.android.gms.samples.vision.barcodereader.BarcodeCapture
 import com.google.android.gms.samples.vision.barcodereader.BarcodeGraphic
@@ -24,10 +27,14 @@ class BarcodeReaderActivity : AppCompatActivity(), BarcodeRetriever {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.barcode_reader_activity)
 
         val barcodeCapture = supportFragmentManager.findFragmentById(R.id.barcode_reader_fragment) as BarcodeCapture
         barcodeCapture.setRetrieval(this)
+
+
     }
 
     override fun onRetrieved(barcode: Barcode?) {
@@ -73,6 +80,15 @@ class BarcodeReaderActivity : AppCompatActivity(), BarcodeRetriever {
 
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent()
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+
+        super.onBackPressed()
+
     }
 
 }

@@ -2,15 +2,15 @@ package cryptbros.starport
 
 import android.app.Activity
 import android.content.Intent
+import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-
-import android.util.Log
 import cryptbros.starport.data.DatabaseManager
 import cryptbros.starport.data.Session
-import android.os.AsyncTask
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,20 +24,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        object : AsyncTask<Void, Void, Int?>() {
-            override fun doInBackground(vararg params: Void): Int? {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CUPCAKE) {
+            object : AsyncTask<Void, Void, Int?>() {
+                override fun doInBackground(vararg params: Void): Int? {
 
-                DatabaseManager.getInstance(this@MainActivity).sessionDao().delete()
-                DatabaseManager.getInstance(this@MainActivity).sessionDao().active
+                    DatabaseManager.getInstance(this@MainActivity).sessionDao().delete()
+                    DatabaseManager.getInstance(this@MainActivity).sessionDao().active
 
-                DatabaseManager.getInstance(this@MainActivity).sessionDao().insert(Session(publicKey = "0x123"))
-                val activeSession = DatabaseManager.getInstance(this@MainActivity).sessionDao().active
-                Log.d("", activeSession.publicKey)
+                    DatabaseManager.getInstance(this@MainActivity).sessionDao().insert(Session(publicKey = "0x123"))
+                    val activeSession = DatabaseManager.getInstance(this@MainActivity).sessionDao().active
+                    Log.d("", activeSession.publicKey)
 
-                return null
-            }
+                    return null
+                }
 
-        }.execute()
+            }.execute()
+        }
 
         val button = findViewById<Button>(R.id.test_button) as Button
         button.setOnClickListener {
@@ -56,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                     _addressTextView.text = data.getStringExtra("address")
                 }
             }
+
         }
     }
 
